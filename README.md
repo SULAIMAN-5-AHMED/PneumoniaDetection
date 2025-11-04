@@ -1,10 +1,10 @@
-##Pneumonia Detection Web App 
+## Pneumonia Detection Web App 
 
-##Overview
+## Overview
 
 This web application uses a Convolutional Neural Network (CNN) to detect pneumonia from chest X-ray images. Built with Django for the backend and TensorFlow/Keras for model inference, it provides a clean interface for uploading images and viewing predictions.
 
-##Features
+## Features
 
 - Upload chest X-ray images via browser
 - Real-time prediction with probability scores
@@ -12,7 +12,7 @@ This web application uses a Convolutional Neural Network (CNN) to detect pneumon
 - Dynamic feedback and reset controls
 - Modular preprocessing pipeline with error handling
 
-##Model Architectur
+## Model Architectur
 
 
 <img width="868" height="495" alt="image" src="https://github.com/user-attachments/assets/e641fc35-cb9a-441c-a6e8-af590e2743cc" />
@@ -22,7 +22,7 @@ This web application uses a Convolutional Neural Network (CNN) to detect pneumon
 Reminder: Always convert image arrays to tensors before training, and check input shapes using print(x_train[1].shape) and print(x_train.shape). Use np.expand_dims() if dimensions are missing.
 
 
-##Setup Instructions
+## Setup Instructions
 
 1)Clone the repo:
 
@@ -37,7 +37,7 @@ Reminder: Always convert image arrays to tensors before training, and check inpu
   python manage.py runserver
 
 
-##Hosting Notes
+## Hosting Notes
 
 -Model file (.h5) hosted externally due to size limits
 

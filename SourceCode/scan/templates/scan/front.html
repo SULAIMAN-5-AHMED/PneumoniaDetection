@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pneumonia Detection System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .overview {
+            margin-bottom: 40px;
+        }
+
+        .overview h2 {
+            color: #2c3e50;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .overview-text {
+            line-height: 1.8;
+            color: #34495e;
+            font-size: 1.1rem;
+            text-align: justify;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            min-width: 150px;
+            margin: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-card h3 {
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .upload-section {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .upload-btn {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(238, 90, 36, 0.3);
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(238, 90, 36, 0.4);
+        }
+
+        .upload-btn:active {
+            transform: translateY(0);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            background: #f8f9fa;
+            border-top: 1px solid #ecf0f1;
+        }
+
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .stat-card {
+                min-width: 120px;
+                padding: 15px;
+            }
+
+            .stat-card h3 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🫁 Pneumonia Detection AI</h1>
+            <p>Advanced AI-powered medical imaging analysis</p>
+        </div>
+
+        <div class="content">
+            <div class="overview">
+                <h2>How It Works</h2>
+                <div class="overview-text">
+                    <p>Our pneumonia detection system utilizes a state-of-the-art deep learning model trained on a comprehensive dataset of chest X-ray images. The model employs convolutional neural networks (CNNs) to analyze the structural patterns and abnormalities in lung tissue that are characteristic of pneumonia.</p>
+                    <br />
+                    <p>The backend architecture processes uploaded chest X-ray scans through multiple layers of feature extraction and classification. Each image undergoes preprocessing to normalize lighting conditions and enhance relevant features before being fed into the neural network for analysis.</p>
+                    <br />
+                    <p>Our system provides rapid, automated screening that can assist healthcare professionals in making faster diagnostic decisions, potentially reducing the time to treatment initiation.</p>
+                </div>
+
+                <div class="stats">
+                    <div class="stat-card">
+                        <h3>75%</h3>
+                        <p>Model Accuracy</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>5K+</h3>
+                        <p>Trained On</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>800</h3>
+                        <p>Tested On</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="upload-section">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="file" name="scan" accept="image/*" required style="margin-bottom: 20px;" />
+                    <br />
+                    <button class="upload-btn" type="submit">Upload Chest X-Ray Scan</button>
+                </form>
+
+                {% if prediction %}
+                <div id="result-section" style="margin-top: 30px;">
+                    <h2 style="color: #2c3e50;">Prediction Result</h2>
+                    <p style="font-size: 1.3rem; color: #2c3e50; font-weight: bold;">
+                        {{ label }}
+                    </p>
+                    <p style="font-size: 1.1rem; color: #34495e;">
+                        {{ prediction }}
+                    </p>
+                    <button onclick="clearResult()" style="margin-top: 15px; background: #bdc3c7; border: none; padding: 10px 25px; border-radius: 30px; cursor: pointer; font-weight: bold;">
+                        Clear Result
+                    </button>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>This tool is for screening purposes only and should not replace professional medical diagnosis.</p>
+        </div>
+    </div>
+
+    <script>
+        function clearResult() {
+            const resultSection = document.getElementById('result-section');
+            if (resultSection) {
+                resultSection.remove();
+            }
+        }
+    </script>
+</body>
+</html>
